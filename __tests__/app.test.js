@@ -103,4 +103,20 @@ describe('recipe-lab routes', () => {
         });
       });
   });
+
+  it('deletes a recipe', async() => {
+    const noodles = await Recipe.insert({
+      name: 'buttered noodles',
+      directions: [
+        'put noodles in boiling water',
+        'when soft, strain and then add butter'
+      ]
+    });
+
+    return request(app)
+      .delete(`/api/v1/recipes/${noodles.id}`)
+      .then(res => {
+        expect(res.body).toEqual(noodles);
+      });
+  });
 });
