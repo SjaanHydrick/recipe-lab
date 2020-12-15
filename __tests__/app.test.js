@@ -51,6 +51,23 @@ describe('recipe-lab routes', () => {
       });
   });
 
+  it('gets a recipe by id', async() => {
+    const macnchs = await Recipe.insert({
+      name: 'macaroni and cheese',
+      directions:[
+        'preheat oven to 350',
+        'mix ingredients in big bowl',
+        'back for 1 hour'
+      ]
+    });
+
+    return request(app)
+      .get(`/api/v1/recipes/${macnchs.id}`)
+      .then(res => {
+        expect(res.body).toEqual(macnchs);
+      });
+  });
+
   it('updates a recipe by id', async() => {
     const recipe = await Recipe.insert({
       name: 'cookies',
