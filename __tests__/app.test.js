@@ -119,23 +119,5 @@ describe('recipe-lab routes', () => {
         expect(res.body).toEqual(noodles);
       });
   });
-
-  //purposefully wrong test for status handling
-
-  it('gets a recipe by id', async() => {
-    const macnchs = await Recipe.insert({
-      name: 'stuff',
-      directions:[
-        'put stuff in bowl',
-        'throw in oven until melted'
-      ]
-    });
-
-    return request(app)
-      .get('/api/v1/recipes/15')
-      .then(res => {
-        expect(res.body).toEqual(macnchs);
-      });
-  });
 });
 
