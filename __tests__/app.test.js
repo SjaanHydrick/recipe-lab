@@ -122,20 +122,20 @@ describe('recipe-lab routes', () => {
 
   //purposefully wrong test for status handling
 
-//   it('gets a recipe by id', async() => {
-//     const macnchs = await Recipe.insert({
-//       name: 'stuff',
-//       directions:[
-//         'put stuff in bowl',
-//         'throw in oven until melted'
-//       ]
-//     });
+  // it('gets a recipe by id', async() => {
+  //   const macnchs = await Recipe.insert({
+  //     name: 'stuff',
+  //     directions:[
+  //       'put stuff in bowl',
+  //       'throw in oven until melted'
+  //     ]
+  //   });
 
-//     return request(app)
-//       .get(`/api/v1/${macnchs.id}`)
-//       .then(res => {
-//         expect(res.body).toEqual(macnchs);
-//       });
-//   });
+  //   return request(app)
+  //     .get(`/api/v1/${macnchs.id}`)
+  //     .then(res => {
+  //       expect(res.body).toEqual(macnchs);
+  //     });
+  // });
 });
 
