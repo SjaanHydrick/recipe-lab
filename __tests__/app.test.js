@@ -3,6 +3,7 @@ const pool = require('../lib/utils/pool');
 const request = require('supertest');
 const app = require('../lib/app');
 const Recipe = require('../lib/models/recipe');
+//const Log = require('../lib/controllers/logs');
 
 describe('recipe-lab routes', () => {
   beforeEach(() => {
@@ -35,20 +36,30 @@ describe('recipe-lab routes', () => {
       });
   });
 
-  it('creates a log', () => {
+  it('creates a log', async() => {
+    const macnchs = await Recipe.insert({
+      name: 'macaroni and cheese',
+      directions: [
+        'do some stuff',
+        'do more stuff',
+        'even more stuff'
+      ]
+    });
+
     return request(app)
       .post('/api/v1/logs')
       .send({
-        recipeId: '1',
+        recipeId: macnchs.id,
         dateOfEvent: '1/1/11',
-        notes: 'Takes gewd',
+        notes: 'gewd',
         rating: '11/10'
       })
       .then(res => {
         expect(res.body).toEqual({
-          recipeId: '1',
+          id: expect.any(String),
+          recipeId: macnchs.id,
           dateOfEvent: '1/1/11',
-          notes: 'Takes gewd',
+          notes: 'gewd',
           rating: '11/10'
         });
       });
@@ -76,7 +87,7 @@ describe('recipe-lab routes', () => {
       directions:[
         'preheat oven to 350',
         'mix ingredients in big bowl',
-        'back for 1 hour'
+        'bake for 1 hour'
       ]
     });
 
