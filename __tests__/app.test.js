@@ -49,6 +49,10 @@ describe('recipe-lab routes', () => {
   it('creates a log', async() => {
     const macnchs = await Recipe.insert({
       name: 'macaroni and cheese',
+      ingredients: [
+        { amount: '1', item: 'mac' },
+        { amount: '3', item: 'cheese' }
+      ],
       directions: [
         'do some stuff',
         'do more stuff',
@@ -77,9 +81,9 @@ describe('recipe-lab routes', () => {
 
   it('gets all recipes', async() => {
     const recipes = await Promise.all([
-      { name: 'cookies', directions: [] },
-      { name: 'cake', directions: [] },
-      { name: 'pie', directions: [] }
+      { name: 'cookies', ingredients: [], directions: [] },
+      { name: 'cake', ingredients: [], directions: [] },
+      { name: 'pie', ingredients: [], directions: [] }
     ].map(recipe => Recipe.insert(recipe)));
 
     return request(app)
@@ -94,6 +98,10 @@ describe('recipe-lab routes', () => {
   it('gets all logs', async() => {
     const noodles = await Recipe.insert({
       name: 'buttered noodles',
+      ingredients: [
+        { amount: '1', item: 'butter' },
+        { amount: '3', item: 'noodles' }
+      ],
       directions: [
         'put noodles in boiling water',
         'when soft, strain and then add butter'
@@ -101,6 +109,10 @@ describe('recipe-lab routes', () => {
     });
     const macnchs = await Recipe.insert({
       name: 'macaroni and cheese',
+      ingredients: [
+        { amount: '1', item: 'mac' },
+        { amount: '3', item: 'cheese' }
+      ],
       directions:[
         'preheat oven to 350',
         'mix ingredients in big bowl',
@@ -125,6 +137,10 @@ describe('recipe-lab routes', () => {
   it('gets a recipe by id', async() => {
     const macnchs = await Recipe.insert({
       name: 'macaroni and cheese',
+      ingredients: [
+        { amount: '1', item: 'mac' },
+        { amount: '3', item: 'cheese' }
+      ],
       directions:[
         'preheat oven to 350',
         'mix ingredients in big bowl',
@@ -142,6 +158,10 @@ describe('recipe-lab routes', () => {
   it('gets a log by id', async() => {
     const macnchs = await Recipe.insert({
       name: 'macaroni and cheese',
+      ingredients: [
+        { amount: '1', item: 'mac' },
+        { amount: '3', item: 'cheese' }
+      ],
       directions:[
         'preheat oven to 350',
         'mix ingredients in big bowl',
@@ -166,6 +186,11 @@ describe('recipe-lab routes', () => {
   it('updates a recipe by id', async() => {
     const recipe = await Recipe.insert({
       name: 'cookies',
+      ingredients: [
+        { amount: '1 lb', item: 'flour' },
+        { amount: '3 cups', item: 'milk' },
+        { amount: '1', item: 'egg' }
+      ],
       directions: [
         'preheat oven to 375',
         'mix ingredients',
@@ -178,6 +203,11 @@ describe('recipe-lab routes', () => {
       .put(`/api/v1/recipes/${recipe.id}`)
       .send({
         name: 'good cookies',
+        ingredients: [
+          { amount: '1 lb', item: 'flour' },
+          { amount: '3 cups', item: 'milk' },
+          { amount: '1', item: 'egg' }
+        ],
         directions: [
           'preheat oven to 375',
           'mix ingredients',
@@ -189,6 +219,11 @@ describe('recipe-lab routes', () => {
         expect(res.body).toEqual({
           id: expect.any(String),
           name: 'good cookies',
+          ingredients: [
+            { amount: '1 lb', item: 'flour' },
+            { amount: '3 cups', item: 'milk' },
+            { amount: '1', item: 'egg' }
+          ],
           directions: [
             'preheat oven to 375',
             'mix ingredients',
@@ -202,6 +237,10 @@ describe('recipe-lab routes', () => {
   it('updates a log by id', async() => {
     const macnchs = await Recipe.insert({
       name: 'macaroni and cheese',
+      ingredients: [
+        { amount: '1', item: 'mac' },
+        { amount: '3', item: 'cheese' }
+      ],
       directions:[
         'preheat oven to 350',
         'mix ingredients in big bowl',
@@ -238,6 +277,10 @@ describe('recipe-lab routes', () => {
   it('deletes a recipe', async() => {
     const noodles = await Recipe.insert({
       name: 'buttered noodles',
+      ingredients: [
+        { amount: '1', item: 'butter' },
+        { amount: '3', item: 'noodles' }
+      ],
       directions: [
         'put noodles in boiling water',
         'when soft, strain and then add butter'
@@ -254,6 +297,10 @@ describe('recipe-lab routes', () => {
   it('deletes a log', async() => {
     const macnchs = await Recipe.insert({
       name: 'macaroni and cheese',
+      ingredients: [
+        { amount: '1', item: 'mac' },
+        { amount: '3', item: 'cheese' }
+      ],
       directions:[
         'preheat oven to 350',
         'mix ingredients in big bowl',
