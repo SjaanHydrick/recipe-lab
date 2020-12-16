@@ -104,7 +104,7 @@ describe('recipe-lab routes', () => {
     ].map(log => Log.insert(log)));
 
     return request(app)
-      .get('api/v1/logs')
+      .get('/api/v1/logs')
       .then(res => {
         logs.forEach(log => {
           expect(res.body).toContainEqual(log);
