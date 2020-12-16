@@ -3,7 +3,7 @@ const pool = require('../lib/utils/pool');
 const request = require('supertest');
 const app = require('../lib/app');
 const Recipe = require('../lib/models/recipe');
-//const Log = require('../lib/controllers/logs');
+const Log = require('../lib/models/log');
 
 describe('recipe-lab routes', () => {
   beforeEach(() => {
@@ -77,6 +77,37 @@ describe('recipe-lab routes', () => {
       .then(res => {
         recipes.forEach(recipe => {
           expect(res.body).toContainEqual(recipe);
+        });
+      });
+  });
+
+  it('gets all logs', async() => {
+    const noodles = await Recipe.insert({
+      name: 'buttered noodles',
+      directions: [
+        'put noodles in boiling water',
+        'when soft, strain and then add butter'
+      ]
+    });
+    const macnchs = await Recipe.insert({
+      name: 'macaroni and cheese',
+      directions:[
+        'preheat oven to 350',
+        'mix ingredients in big bowl',
+        'bake for 1 hour'
+      ]
+    });
+
+    const logs = await Promise.all([
+      { recipeId: noodles.id, dateOfEvent: '12/5/20', notes: 'noodles', rating: '2/10' },
+      { recipeId: macnchs.id, dateOfEvent: '2/4/16', notes: 'best meal ever', rating: '200/10' }
+    ].map(log => Log.insert(log)));
+
+    return request(app)
+      .get('api/v1/logs')
+      .then(res => {
+        logs.forEach(log => {
+          expect(res.body).toContainEqual(log);
         });
       });
   });
