@@ -189,6 +189,42 @@ describe('recipe-lab routes', () => {
       });
   });
 
+  it('updates a log by id', async() => {
+    const macnchs = await Recipe.insert({
+      name: 'macaroni and cheese',
+      directions:[
+        'preheat oven to 350',
+        'mix ingredients in big bowl',
+        'bake for 1 hour'
+      ]
+    });
+
+    const macnchsLog = await Log.insert({
+      recipeId: macnchs.id,
+      dateOfEvent: '1/1/11',
+      notes: 'gewd',
+      rating: '11/10'
+    });
+
+    return request(app)
+      .put(`/api/v1/logs/${macnchsLog.id}`)
+      .send({
+        recipeId: macnchs.id,
+        dateOfEvent: '2/2/11',
+        notes: 'so gewd',
+        rating: '100/10'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          id: expect.any(String),
+          recipeId: macnchs.id,
+          dateOfEvent: '2/2/11',
+          notes: 'so gewd',
+          rating: '100/10'
+        });
+      });
+  });
+
   it('deletes a recipe', async() => {
     const noodles = await Recipe.insert({
       name: 'buttered noodles',
