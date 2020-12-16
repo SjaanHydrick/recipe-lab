@@ -35,6 +35,25 @@ describe('recipe-lab routes', () => {
       });
   });
 
+  it('creates a log', () => {
+    return request(app)
+      .post('/api/v1/logs')
+      .send({
+        recipeId: '1',
+        dateOfEvent: '1/1/11',
+        notes: 'Takes gewd',
+        rating: '11/10'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          recipeId: '1',
+          dateOfEvent: '1/1/11',
+          notes: 'Takes gewd',
+          rating: '11/10'
+        });
+      });
+  });
+
   it('gets all recipes', async() => {
     const recipes = await Promise.all([
       { name: 'cookies', directions: [] },
