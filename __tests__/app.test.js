@@ -240,5 +240,29 @@ describe('recipe-lab routes', () => {
         expect(res.body).toEqual(noodles);
       });
   });
+
+  it('deletes a log', async() => {
+    const macnchs = await Recipe.insert({
+      name: 'macaroni and cheese',
+      directions:[
+        'preheat oven to 350',
+        'mix ingredients in big bowl',
+        'bake for 1 hour'
+      ]
+    });
+
+    const macnchsLog = await Log.insert({
+      recipeId: macnchs.id,
+      dateOfEvent: '1/1/11',
+      notes: 'gewd',
+      rating: '11/10'
+    });
+
+    return request(app)
+      .delete(`/api/v1/logs/${macnchsLog.id}`)
+      .then(res => {
+        expect(res.body).toEqual(macnchsLog);
+      });
+  });
 });
 
