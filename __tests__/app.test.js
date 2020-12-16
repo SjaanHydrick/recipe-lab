@@ -15,6 +15,11 @@ describe('recipe-lab routes', () => {
       .post('/api/v1/recipes')
       .send({
         name: 'cookies',
+        ingredients: [
+          { amount: '1 lb', item: 'flour' },
+          { amount: '3 cups', item: 'milk' },
+          { amount: '1', item: 'egg' }
+        ],
         directions: [
           'preheat oven to 375',
           'mix ingredients',
@@ -26,6 +31,11 @@ describe('recipe-lab routes', () => {
         expect(res.body).toEqual({
           id: expect.any(String),
           name: 'cookies',
+          ingredients: [
+            { amount: '1 lb', item: 'flour' },
+            { amount: '3 cups', item: 'milk' },
+            { amount: '1', item: 'egg' }
+          ],
           directions: [
             'preheat oven to 375',
             'mix ingredients',
